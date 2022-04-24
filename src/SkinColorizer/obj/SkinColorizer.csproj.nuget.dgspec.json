@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\SkinColorizer.csproj": {}
+  },
+  "projects": {
+    "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\SkinColorizer.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\SkinColorizer.Models.csproj",
+        "projectName": "SkinColorizer.Models",
+        "projectPath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\SkinColorizer.Models.csproj",
+        "packagesPath": "C:\\Users\\Tea\\.nuget\\packages\\",
+        "outputPath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tea\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "newtonsoft.json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\SkinColorizer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\SkinColorizer.csproj",
+        "projectName": "SkinColorizer",
+        "projectPath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\SkinColorizer.csproj",
+        "packagesPath": "C:\\Users\\Tea\\.nuget\\packages\\",
+        "outputPath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tea\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\SkinColorizer.Models.csproj": {
+                "projectPath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer.Models\\SkinColorizer.Models.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "SixLabors.ImageSharp": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

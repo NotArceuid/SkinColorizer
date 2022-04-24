@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "lbUlmU8pdkKBvkIN6dAEyWdH4rQB/m50He4QqMKX2RSB+sBzll5UAd+o/4NLwy102MaqXy1CYviUvqk35GAs0Q==",
+  "success": true,
+  "projectFilePath": "D:\\FileDump\\Projects\\SkinColorizer\\src\\SkinColorizer\\SkinColorizer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Tea\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tea\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Tea\\.nuget\\packages\\sixlabors.imagesharp\\2.1.0\\sixlabors.imagesharp.2.1.0.nupkg.sha512",
+    "C:\\Users\\Tea\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\Tea\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
