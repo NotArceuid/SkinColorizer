@@ -1,3 +1,4 @@
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
@@ -32,23 +33,22 @@ namespace SkinColorizer
 
         private void Colorize(float degrees, List<string> skinElementPaths, string outputDirectory)
         {
-            System.Console.WriteLine(outputDirectory);
             foreach (string skinElementPath in skinElementPaths)
             {
-                System.Console.WriteLine(skinElementPath);
                 using (var image = Image.Load(skinElementPath))
                 {
                     image.Mutate(x => x.Hue(degrees));
-                    image.SaveAsPng(outputDirectory);
+                    image.SaveAsPng(outputDirectory + "/" + Path.GetFileName(skinElementPath));
                 }
             }
         }
 
         private List<string> FilterSkinElements(List<string> currentSkinElementNames)
         {
-            var json = JsonConvert.DeserializeObject<SkinElements>(File.ReadAllText("./SkinElements.json"));       
-            currentSkinElementNames.RemoveAll(x => { 
-                return !x.EndsWith(".png"); 
+            var json = JsonConvert.DeserializeObject<SkinElements>(File.ReadAllText("./SkinElements.json"));
+            currentSkinElementNames.RemoveAll(x =>
+            {
+                return !x.EndsWith(".png");
             });
 
             List<string> filteredSkinElements = new();
