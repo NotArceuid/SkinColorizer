@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using SkinColorizer.Models;
-using SkinColorizer.Models.Enums;
+using SkinColorizer.Models.Enums; 
 
 namespace SkinColorizer
 {
