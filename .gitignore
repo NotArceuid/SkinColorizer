@@ -1,2 +1,12 @@
-bin/
+#compiled code
 obj/
+bin/
+nupkg/
+
+#user prefrences
+*.user
+
+#ide
+.vs/
+.vscode/
+.idea/

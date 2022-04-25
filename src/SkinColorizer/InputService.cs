@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using SkinColorizer.Models;
-using SkinColorizer.Models.Enums;
+using SkinColorizer.Models.Enums; 
 
 namespace SkinColorizer
 {
@@ -16,33 +16,33 @@ namespace SkinColorizer
             this.inputProvider = inputProvider;
         }
 
-        private bool IsDataFetched;
-        public SkinData HandleUserInput()
+
+        public ColorizerOptions HandleUserInput()
         {
-            var skinData = new SkinData();
+            var options = new ColorizerOptions();
 
-            if (skinData != null)
+            var path = GetPath();
+            if (string.IsNullOrWhiteSpace(path))
             {
-                skinData.Path = GetPath();
-                skinData.OutputDirectory = GetOutputDirectory();
-                skinData.HueDegrees = GetHueDegrees();
-                skinData.ColoredSkinName = GetColoredSkinName();
-            }
-
-            return skinData;
-        }
-
-        private string GetColoredSkinName()
-        {
-            outputProvider("Please enter your input skin name");
-            var userInput = inputProvider();
-
-            if (string.IsNullOrEmpty(userInput))
-            {
-                outputProvider("No Name Specified");
+                System.Console.WriteLine("rqgewrg");
                 return null;
             }
-            return userInput;
+
+            var outputDirectory = GetOutputDirectory();
+            if (string.IsNullOrWhiteSpace(outputDirectory))
+            {
+                System.Console.WriteLine("wrwqwq");
+                return null;
+            }
+
+            var hue = GetHueDegrees();
+
+            options.Path = path;
+            options.OutputDirectory = outputDirectory;
+            System.Console.WriteLine(options.Path);
+            options.HueDegrees = hue;
+
+            return options;
         }
 
         private string GetPath()
@@ -51,13 +51,13 @@ namespace SkinColorizer
             var directory = inputProvider();
 
             bool doesSkinExist = File.Exists(directory + @"\skin.ini");
-            if (doesSkinExist)
+            if (VerifyDirectory(directory) && File.Exists(directory + @"\skin.ini"))
             {
                 return directory;
             }
 
             outputProvider("Invalid Path");
-            return inputProvider();
+            return string.Empty;
         }
 
         private string GetOutputDirectory()
@@ -65,8 +65,7 @@ namespace SkinColorizer
             outputProvider("Please enter your destination path");
             var directory = inputProvider();
 
-            bool doesDirectoryExist = Directory.Exists(directory);
-            if (!doesDirectoryExist)
+            if (!VerifyDirectory(directory))
             {
                 outputProvider("Directory does not exist, Would you like to create a new directory? y/n");
                 var choice = inputProvider();
@@ -75,13 +74,19 @@ namespace SkinColorizer
                 {
                     Directory.CreateDirectory(directory);
                     outputProvider("Directory created successfully");
+
+                    return directory;
                 }
-
-                return null;
+                else 
+                {
+                    return string.Empty;
+                }
             }
-
             return directory;
         }
+
+        private bool VerifyDirectory(string directory) => Regex.IsMatch(directory, @"((?:[^/]*/)*)(.*)") && 
+                                                                Directory.Exists(directory);
 
         private float GetHueDegrees()
         {

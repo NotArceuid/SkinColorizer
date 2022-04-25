@@ -1,9 +1,6 @@
-using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.Processing;
-using SkinColorizer.Models;
+using SixLabors.ImageSharp.Processing; 
 
 namespace SkinColorizer
 {
@@ -14,26 +11,21 @@ namespace SkinColorizer
         public Colorizer(InputService inputService)
         {
             this.inputService = inputService;
-        }
 
-        public void Run()
-        {
             var skin = inputService.HandleUserInput();
+            if (skin is not null)
+            {
+                var skinElements = GetSkinElements(skin.Path);
+                Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
+            }
 
-            var skinElementPaths = GetSkinElements(skin.Path);
-            var elements = FilterSkinElements(skinElementPaths);
-            Colorize(skin.HueDegrees, elements, skin.OutputDirectory);
+            return;
         }
 
-        private List<string> GetSkinElements(string skinPath)
+        private void Colorize(float degrees, List<string> skinElements, string outputDirectory)
         {
-            var skinElements = Directory.EnumerateFiles(skinPath);
-            return skinElements.ToList();
-        }
-
-        private void Colorize(float degrees, List<string> skinElementPaths, string outputDirectory)
-        {
-            foreach (string skinElementPath in skinElementPaths)
+            System.Console.WriteLine("colorizing");
+            foreach (string skinElementPath in skinElements)
             {
                 using (var image = Image.Load(skinElementPath))
                 {
@@ -43,18 +35,24 @@ namespace SkinColorizer
             }
         }
 
-        private List<string> FilterSkinElements(List<string> currentSkinElementNames)
+        private List<string> GetSkinElements(string path)
+        {
+            var skinElements = Directory.EnumerateFiles(path);
+            return skinElements.ToList();
+        }
+
+        private List<string> FilterSkinElements(List<string> skinElements)
         {
             var json = JsonConvert.DeserializeObject<SkinElements>(File.ReadAllText("./SkinElements.json"));
-            currentSkinElementNames.RemoveAll(x =>
+            skinElements.RemoveAll(x =>
             {
                 return !x.EndsWith(".png");
             });
 
-            List<string> filteredSkinElements = new();
-            foreach (var _skinElements in json.Elements)
+            var filteredSkinElements = new List<string>();
+            foreach (var jsonElements in json.Elements)
             {
-                var filteredElements = currentSkinElementNames.Where(x => x.Contains(_skinElements));
+                var filteredElements = skinElements.Where(x => x.Contains(jsonElements));
                 filteredSkinElements.AddRange(filteredElements);
             }
 
