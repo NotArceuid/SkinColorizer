@@ -1,9 +1,7 @@
-using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
-using SkinColorizer.Models;
 
 namespace SkinColorizer
 {
@@ -14,26 +12,16 @@ namespace SkinColorizer
         public Colorizer(InputService inputService)
         {
             this.inputService = inputService;
-        }
 
-        public void Run()
-        {
             var skin = inputService.HandleUserInput();
 
-            var skinElementPaths = GetSkinElements(skin.Path);
-            var elements = FilterSkinElements(skinElementPaths);
-            Colorize(skin.HueDegrees, elements, skin.OutputDirectory);
+            var skinElements = GetSkinElements(skin.Path);
+            Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
         }
 
-        private List<string> GetSkinElements(string skinPath)
+        private void Colorize(float degrees, List<string> skinElements, string outputDirectory)
         {
-            var skinElements = Directory.EnumerateFiles(skinPath);
-            return skinElements.ToList();
-        }
-
-        private void Colorize(float degrees, List<string> skinElementPaths, string outputDirectory)
-        {
-            foreach (string skinElementPath in skinElementPaths)
+            foreach (string skinElementPath in skinElements)
             {
                 using (var image = Image.Load(skinElementPath))
                 {
@@ -41,6 +29,12 @@ namespace SkinColorizer
                     image.SaveAsPng(outputDirectory + "/" + Path.GetFileName(skinElementPath));
                 }
             }
+        }
+
+        private List<string> GetSkinElements(string path)
+        {
+            var skinElements = Directory.EnumerateFiles(path);
+            return skinElements.ToList();
         }
 
         private List<string> FilterSkinElements(List<string> currentSkinElementNames)

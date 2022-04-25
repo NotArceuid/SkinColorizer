@@ -16,33 +16,18 @@ namespace SkinColorizer
             this.inputProvider = inputProvider;
         }
 
-        private bool IsDataFetched;
-        public SkinData HandleUserInput()
+        public ColorizerOptions HandleUserInput()
         {
-            var skinData = new SkinData();
+            var options = new ColorizerOptions();
 
-            if (skinData != null)
+            if (options != null)
             {
-                skinData.Path = GetPath();
-                skinData.OutputDirectory = GetOutputDirectory();
-                skinData.HueDegrees = GetHueDegrees();
-                skinData.ColoredSkinName = GetColoredSkinName();
+                options.Path = GetPath();
+                options.OutputDirectory = GetOutputDirectory();
+                options.HueDegrees = GetHueDegrees();
             }
 
-            return skinData;
-        }
-
-        private string GetColoredSkinName()
-        {
-            outputProvider("Please enter your input skin name");
-            var userInput = inputProvider();
-
-            if (string.IsNullOrEmpty(userInput))
-            {
-                outputProvider("No Name Specified");
-                return null;
-            }
-            return userInput;
+            return options;
         }
 
         private string GetPath()

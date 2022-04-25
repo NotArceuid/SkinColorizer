@@ -14,8 +14,6 @@
         
             var inputService = new InputService(Console.WriteLine, Console.ReadLine);
             var colorizer = new Colorizer(inputService);
-
-            colorizer.Run();
         }
     }
 }
