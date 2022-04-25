@@ -37,18 +37,18 @@ namespace SkinColorizer
             return skinElements.ToList();
         }
 
-        private List<string> FilterSkinElements(List<string> currentSkinElementNames)
+        private List<string> FilterSkinElements(List<string> skinElements)
         {
             var json = JsonConvert.DeserializeObject<SkinElements>(File.ReadAllText("./SkinElements.json"));
-            currentSkinElementNames.RemoveAll(x =>
+            skinElements.RemoveAll(x =>
             {
                 return !x.EndsWith(".png");
             });
 
-            List<string> filteredSkinElements = new();
-            foreach (var _skinElements in json.Elements)
+            var filteredSkinElements = new List<string>();
+            foreach (var jsonElements in json.Elements)
             {
-                var filteredElements = currentSkinElementNames.Where(x => x.Contains(_skinElements));
+                var filteredElements = skinElements.Where(x => x.Contains(jsonElements));
                 filteredSkinElements.AddRange(filteredElements);
             }
 
