@@ -16,16 +16,31 @@ namespace SkinColorizer
             this.inputProvider = inputProvider;
         }
 
+
         public ColorizerOptions HandleUserInput()
         {
             var options = new ColorizerOptions();
 
-            if (options != null)
+            var path = GetPath();
+            if (string.IsNullOrWhiteSpace(path))
             {
-                options.Path = GetPath();
-                options.OutputDirectory = GetOutputDirectory();
-                options.HueDegrees = GetHueDegrees();
+                System.Console.WriteLine("rqgewrg");
+                return null;
             }
+
+            var outputDirectory = GetOutputDirectory();
+            if (string.IsNullOrWhiteSpace(outputDirectory))
+            {
+                System.Console.WriteLine("wrwqwq");
+                return null;
+            }
+
+            var hue = GetHueDegrees();
+
+            options.Path = path;
+            options.OutputDirectory = outputDirectory;
+            System.Console.WriteLine(options.Path);
+            options.HueDegrees = hue;
 
             return options;
         }
@@ -36,13 +51,13 @@ namespace SkinColorizer
             var directory = inputProvider();
 
             bool doesSkinExist = File.Exists(directory + @"\skin.ini");
-            if (doesSkinExist)
+            if (VerifyDirectory(directory) && File.Exists(directory + @"\skin.ini"))
             {
                 return directory;
             }
 
             outputProvider("Invalid Path");
-            return inputProvider();
+            return string.Empty;
         }
 
         private string GetOutputDirectory()
@@ -50,8 +65,7 @@ namespace SkinColorizer
             outputProvider("Please enter your destination path");
             var directory = inputProvider();
 
-            bool doesDirectoryExist = Directory.Exists(directory);
-            if (!doesDirectoryExist)
+            if (!VerifyDirectory(directory))
             {
                 outputProvider("Directory does not exist, Would you like to create a new directory? y/n");
                 var choice = inputProvider();
@@ -60,13 +74,19 @@ namespace SkinColorizer
                 {
                     Directory.CreateDirectory(directory);
                     outputProvider("Directory created successfully");
+
+                    return directory;
                 }
-
-                return null;
+                else 
+                {
+                    return string.Empty;
+                }
             }
-
             return directory;
         }
+
+        private bool VerifyDirectory(string directory) => Regex.IsMatch(directory, @"((?:[^/]*/)*)(.*)") && 
+                                                                Directory.Exists(directory);
 
         private float GetHueDegrees()
         {

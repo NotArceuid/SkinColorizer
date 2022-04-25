@@ -14,13 +14,18 @@ namespace SkinColorizer
             this.inputService = inputService;
 
             var skin = inputService.HandleUserInput();
+            if (skin is not null)
+            {
+                var skinElements = GetSkinElements(skin.Path);
+                Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
+            }
 
-            var skinElements = GetSkinElements(skin.Path);
-            Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
+            return;
         }
 
         private void Colorize(float degrees, List<string> skinElements, string outputDirectory)
         {
+            System.Console.WriteLine("colorizing");
             foreach (string skinElementPath in skinElements)
             {
                 using (var image = Image.Load(skinElementPath))

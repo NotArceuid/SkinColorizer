@@ -13,7 +13,11 @@
             Console.OutputEncoding = System.Text.Encoding.Unicode;
         
             var inputService = new InputService(Console.WriteLine, Console.ReadLine);
-            var colorizer = new Colorizer(inputService);
+            
+            while (true)
+            {
+                var colorizer = new Colorizer(inputService);
+            }
         }
     }
 }
