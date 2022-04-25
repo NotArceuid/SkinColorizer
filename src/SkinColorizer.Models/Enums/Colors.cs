@@ -1,5 +1,5 @@
 namespace SkinColorizer.Models.Enums
-{
+{ 
     public enum Colors
     {
         Red = 0,
