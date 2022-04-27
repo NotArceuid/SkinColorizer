@@ -90,19 +90,18 @@ namespace SkinColorizer
 
         private float GetHueDegrees()
         {
-            outputProvider("Please enter the color you want: [1] Red, [2] Green, [3] Yellow, [4] Blue, [5] Purple, [6] Custom Color");
+            outputProvider("Please enter the color you want: [1] Red, [2] Green, [3] Blue, [4] Purple, [5] Custom Color");
             var isSuccessful = int.TryParse(inputProvider(), out int value);
 
             if (isSuccessful)
             {
                 float result = value switch
                 {
-                    1 => (float)Colors.Red,
-                    2 => (float)Colors.Green,
-                    3 => (float)Colors.Yellow,
-                    4 => (float)Colors.Blue,
-                    5 => (float)Colors.Purple,
-                    6 => CustomColorHandler(),
+                    1 => (float)HueDegrees.Red,
+                    2 => (float)HueDegrees.Green,
+                    3 => (float)HueDegrees.Blue,
+                    4 => (float)HueDegrees.Purple,
+                    5 => CustomColorHandler(),
                     _ => InvalidChoiceHandler()
                 };
 

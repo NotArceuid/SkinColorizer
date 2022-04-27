@@ -1,11 +1,10 @@
 namespace SkinColorizer.Models.Enums
 { 
-    public enum Colors
+    public enum HueDegrees
     {
         Red = 0,
         Green = 120,
-        Blue = 210,
-        Yellow = 60,
-        Purple = 300
+        Blue = 180,
+        Purple = 285
     }
 }
