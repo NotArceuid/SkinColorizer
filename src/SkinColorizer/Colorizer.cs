@@ -32,7 +32,6 @@ namespace SkinColorizer
             var converter = new ColorSpaceConverter();
             foreach (string skinElementPath in skinElements)
             {
-                // string skinElementPath = skinElements.FirstOrDefault();
                 using var image = Image.Load<Rgba32>(skinElementPath);
 
                 image.ProcessPixelRows(accessor =>
@@ -46,7 +45,7 @@ namespace SkinColorizer
                         for (int x = 0; x < row.Length; x++)
                         {
                             hsl[x] = converter.ToHsl(row[x]);
-                            var newHue = new Hsl(hsl[x].H - hsl[x].H + 300, hsl[x].S, hsl[x].L);
+                            var newHue = new Hsl(hsl[x].H - hsl[x].H + degrees, hsl[x].S, hsl[x].L);
 
                             row[x] = converter.ToRgb(newHue);
                         }
