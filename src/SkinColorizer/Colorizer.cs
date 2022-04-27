@@ -16,18 +16,20 @@ namespace SkinColorizer
         {
             this.inputService = inputService;
 
-            var skin = inputService.HandleUserInput();
+            var skin = inputService.UserInputHandler();
             if (skin is not null)
             {
                 var skinElements = GetSkinElements(skin.Path);
                 Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
+
+                SaveSkinElements(Directory.GetFiles(skin.Path).ToList(), skin.Path);
             }
 
             return;
         }
 
         //I am sinciery sorry for the shitty code.
-        private void Colorize(float degrees, List<string> skinElements, string outputDirectory)
+        private void Colorize(float degrees, List<string> skinElements, string outputPath)
         {
             var converter = new ColorSpaceConverter();
             foreach (string skinElementPath in skinElements)
@@ -51,7 +53,7 @@ namespace SkinColorizer
                         }
                     }
 
-                    image.SaveAsPng(outputDirectory + "/" + Path.GetFileName(skinElementPath));
+                    image.SaveAsPng(outputPath + "/" + Path.GetFileName(skinElementPath));
                 });
             }
         }
@@ -78,6 +80,11 @@ namespace SkinColorizer
             }
 
             return filteredSkinElements;
+        }
+
+        private void SaveSkinElements(List<string> skinElements, string path)
+        {
+
         }
 
 

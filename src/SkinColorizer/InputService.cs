@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
 using SkinColorizer.Models;
-using SkinColorizer.Models.Enums; 
+using SkinColorizer.Models.Enums;
 
 namespace SkinColorizer
 {
@@ -16,30 +16,17 @@ namespace SkinColorizer
             this.inputProvider = inputProvider;
         }
 
-
-        public ColorizerOptions HandleUserInput()
+        public ColorizerOptions UserInputHandler()
         {
             var options = new ColorizerOptions();
 
-            var path = GetPath();
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                System.Console.WriteLine("rqgewrg");
-                return null;
-            }
+            string path = GetPath();
+            string outputPath = GetOutputPath(path);
 
-            var outputDirectory = GetOutputDirectory();
-            if (string.IsNullOrWhiteSpace(outputDirectory))
-            {
-                System.Console.WriteLine("wrwqwq");
-                return null;
-            }
-
-            var hue = GetHueDegrees();
+            float hue = GetHueDegrees();
 
             options.Path = path;
-            options.OutputDirectory = outputDirectory;
-            System.Console.WriteLine(options.Path);
+            options.OutputDirectory = outputPath;
             options.HueDegrees = hue;
 
             return options;
@@ -60,32 +47,24 @@ namespace SkinColorizer
             return string.Empty;
         }
 
-        private string GetOutputDirectory()
+        private string GetOutputPath(string skinDirPath)
         {
-            outputProvider("Please enter your destination path");
-            var directory = inputProvider();
+            outputProvider("Please enter your output directory name");
+            var name = inputProvider();
 
-            if (!VerifyDirectory(directory))
+            if (string.IsNullOrWhiteSpace(name))
             {
-                outputProvider("Directory does not exist, Would you like to create a new directory? y/n");
-                var choice = inputProvider();
-
-                if (choice.ToLower() == "y")
-                {
-                    Directory.CreateDirectory(directory);
-                    outputProvider("Directory created successfully");
-
-                    return directory;
-                }
-                else 
-                {
-                    return string.Empty;
-                }
+                outputProvider("Invalid Name");
+                return string.Empty;
             }
-            return directory;
+
+            string skinDir = Path.GetDirectoryName(skinDirPath);
+            string dir = skinDir + @"\" + name;
+            Directory.CreateDirectory(dir);
+            return dir;
         }
 
-        private bool VerifyDirectory(string directory) => Regex.IsMatch(directory, @"((?:[^/]*/)*)(.*)") && 
+        private bool VerifyDirectory(string directory) => Regex.IsMatch(directory, @"((?:[^/]*/)*)(.*)") &&
                                                                 Directory.Exists(directory);
 
         private float GetHueDegrees()
