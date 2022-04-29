@@ -1,4 +1,4 @@
-namespace SkinColorizer.Models.Enums
+namespace SkinColorizer.Common.Enums
 { 
     public enum HueDegrees
     {

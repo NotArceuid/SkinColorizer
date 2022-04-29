@@ -1,8 +1,8 @@
-namespace SkinColorizer.Models 
+namespace SkinColorizer.Common
 {
     public class ColorizerOptions
     { 
-        public float HueDegrees { get; set; }
+        public int HueDegrees { get; set; }
         public string Path { get; set; }
         public string OutputDirectory { get; set; }
 

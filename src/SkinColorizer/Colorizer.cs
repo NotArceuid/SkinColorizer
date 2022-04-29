@@ -1,10 +1,6 @@
+using ImageProcessor;
+using ImageProcessor.Imaging.Formats;
 using Newtonsoft.Json;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.ColorSpaces;
-using SixLabors.ImageSharp.ColorSpaces.Conversion;
-using SixLabors.ImageSharp.Formats;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace SkinColorizer
 {
@@ -22,39 +18,29 @@ namespace SkinColorizer
                 var skinElements = GetSkinElements(skin.Path);
                 Colorize(skin.HueDegrees, FilterSkinElements(skinElements), skin.OutputDirectory);
 
-                SaveSkinElements(Directory.GetFiles(skin.Path).ToList(), skin.Path);
+                SaveSkinElements(Directory.GetFiles(skin.Path).ToList(), skin.OutputDirectory);
             }
 
             return;
         }
 
-        //I am sinciery sorry for the shitty code.
-        private void Colorize(float degrees, List<string> skinElements, string outputPath)
+        private void Colorize(int degrees, List<string> skinElements, string outputPath)
         {
-            var converter = new ColorSpaceConverter();
-            foreach (string skinElementPath in skinElements)
+            foreach (string element in skinElements)
             {
-                using var image = Image.Load<Rgba32>(skinElementPath);
-
-                image.ProcessPixelRows(accessor =>
+                byte[] photoBytes = File.ReadAllBytes(element);
+                using (var inStream = new MemoryStream(photoBytes))
                 {
-                    Span<Hsl> hsl = new Hsl[accessor.Width];
-                    Span<Rgb> rgb = new Rgb[accessor.Width];
-
-                    for (int y = 0; y < accessor.Height; y++)
+                    using (var fs = new FileStream(Path.Combine(outputPath, Path.GetFileName(element)), FileMode.Create, FileAccess.ReadWrite))
                     {
-                        Span<Rgba32> row = accessor.GetRowSpan(y);
-                        for (int x = 0; x < row.Length; x++)
-                        {
-                            hsl[x] = converter.ToHsl(row[x]);
-                            var newHue = new Hsl(hsl[x].H - hsl[x].H + degrees, hsl[x].S, hsl[x].L);
+                        using ImageFactory imageFactory = new ImageFactory(preserveExifData: true);
 
-                            row[x] = converter.ToRgb(newHue);
-                        }
+                        imageFactory.Load(inStream)
+                                    .Format(new PngFormat())
+                                    .Hue(degrees, false)
+                                    .Save(fs);
                     }
-
-                    image.SaveAsPng(outputPath + "/" + Path.GetFileName(skinElementPath));
-                });
+                }
             }
         }
 
@@ -82,11 +68,15 @@ namespace SkinColorizer
             return filteredSkinElements;
         }
 
-        private void SaveSkinElements(List<string> skinElements, string path)
+        private void SaveSkinElements(List<string> skinElements, string outputDir)
         {
-
+            var json = JsonConvert.DeserializeObject<SkinElements>(File.ReadAllText("./SkinElements.json"));
+            skinElements.RemoveAll(x => json.Elements.Any(e => x.Contains(e)));
+            foreach (var elements in skinElements)
+            {
+                File.Copy(elements, Path.Combine(outputDir, Path.GetFileName(elements)), true);
+            }
         }
-
 
         public class SkinElements
         {

@@ -1,6 +1,6 @@
 using System.Text.RegularExpressions;
-using SkinColorizer.Models;
-using SkinColorizer.Models.Enums;
+using SkinColorizer.Common;
+using SkinColorizer.Common.Enums;
 
 namespace SkinColorizer
 {
@@ -21,9 +21,11 @@ namespace SkinColorizer
             var options = new ColorizerOptions();
 
             string path = GetPath();
+            if (string.IsNullOrWhiteSpace(path)) return null;
             string outputPath = GetOutputPath(path);
+            if (string.IsNullOrWhiteSpace(outputPath)) return null;
 
-            float hue = GetHueDegrees();
+            int hue = GetHueDegrees();
 
             options.Path = path;
             options.OutputDirectory = outputPath;
@@ -67,19 +69,19 @@ namespace SkinColorizer
         private bool VerifyDirectory(string directory) => Regex.IsMatch(directory, @"((?:[^/]*/)*)(.*)") &&
                                                                 Directory.Exists(directory);
 
-        private float GetHueDegrees()
+        private int GetHueDegrees()
         {
             outputProvider("Please enter the color you want: [1] Red, [2] Green, [3] Blue, [4] Purple, [5] Custom Color");
             var isSuccessful = int.TryParse(inputProvider(), out int value);
 
             if (isSuccessful)
             {
-                float result = value switch
+                int result = value switch
                 {
-                    1 => (float)HueDegrees.Red,
-                    2 => (float)HueDegrees.Green,
-                    3 => (float)HueDegrees.Blue,
-                    4 => (float)HueDegrees.Purple,
+                    1 => (int)HueDegrees.Red,
+                    2 => (int)HueDegrees.Green,
+                    3 => (int)HueDegrees.Blue,
+                    4 => (int)HueDegrees.Purple,
                     5 => CustomColorHandler(),
                     _ => InvalidChoiceHandler()
                 };
@@ -91,10 +93,10 @@ namespace SkinColorizer
 
         }
 
-        private float CustomColorHandler()
+        private int CustomColorHandler()
         {
             outputProvider("Please enter the custom color you want in hue degrees");
-            var isSuccessful = float.TryParse(inputProvider(), out float value);
+            var isSuccessful = int.TryParse(inputProvider(), out int value);
 
             if (isSuccessful)
             {
@@ -108,7 +110,7 @@ namespace SkinColorizer
             return InvalidChoiceHandler();
         }
 
-        private float InvalidChoiceHandler()
+        private int InvalidChoiceHandler()
         {
             outputProvider($"Your Choice is invalid");
             return 0;

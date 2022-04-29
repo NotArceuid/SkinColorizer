@@ -25,6 +25,14 @@
         "selection-mod-scorev2",
         "selection-mod-spunout",
         "selection-mod-suddendeath",
-        "selection-mod-target"
+        "selection-mod-target",
+        "selection-mod-easy",
+        "selection-mod-flashlight",
+        "selection-mod-halftime",
+        "selection-mod-hidden",
+        "selection-mod-hardrock",
+        "selection-tab",
+        "spinner-rpm",
+        "fail-background"
     ]
 }
