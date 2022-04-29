@@ -33,7 +33,7 @@ namespace SkinColorizer
                 {
                     using (var fs = new FileStream(Path.Combine(outputPath, Path.GetFileName(element)), FileMode.Create, FileAccess.ReadWrite))
                     {
-                        using ImageFactory imageFactory = new ImageFactory(preserveExifData: true);
+                        using var imageFactory = new ImageFactory(preserveExifData: true);
 
                         imageFactory.Load(inStream)
                                     .Format(new PngFormat())
