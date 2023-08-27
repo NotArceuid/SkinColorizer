@@ -1,3 +1,6 @@
 # SkinColorizer
-A skin colorizer for the rhythm game osu! <br />
-[Inspired by u/Ather7's skin colorizer](https://www.reddit.com/r/osugame/comments/lg9yuj/i_made_a_program_to_recolor_your_skin_in_one_click/) <br/>
+
+Skin colorizer for the rhythmn game osu!
+
+### Notes
+This is a pretty old project of mine. Tbh i'm really embarassed by what i wrote back then. But still, it's nice seeing how much better my coding skills have become. Feel free to do anthing with it.  
